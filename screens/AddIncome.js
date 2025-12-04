@@ -5,45 +5,35 @@ import { useTransactions } from "../context/TransactionContext";
 export default function AddIncome({ navigation }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
 
   const { addIncome } = useTransactions();
 
-  const handleSave = () => {
-    if (!title || !amount || !date) return alert("All fields required!");
-
-    addIncome(title, amount, date);
-
-    navigation.goBack();
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Add Income</Text>
+      <Text style={styles.heading}>Add Income</Text>
 
       <TextInput
-        placeholder="Income Title"
-        style={styles.input}
+        placeholder="Title"
         value={title}
         onChangeText={setTitle}
+        style={styles.input}
       />
 
       <TextInput
-        placeholder="Amount (₹)"
-        style={styles.input}
+        placeholder="Amount"
         keyboardType="numeric"
         value={amount}
         onChangeText={setAmount}
-      />
-
-      <TextInput
-        placeholder="Date (YYYY-MM-DD)"
         style={styles.input}
-        value={date}
-        onChangeText={setDate}
       />
 
-      <TouchableOpacity style={styles.btn} onPress={handleSave}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => {
+          addIncome(title, amount);
+          navigation.goBack();
+        }}
+      >
         <Text style={styles.btnText}>Save Income</Text>
       </TouchableOpacity>
     </View>
@@ -51,23 +41,20 @@ export default function AddIncome({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#f0f8ff" },
-  header: { fontSize: 26, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
+  container: { padding: 20 },
+  heading: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
   input: {
-    height: 45,
     borderWidth: 1,
     borderColor: "#ccc",
-    paddingHorizontal: 10,
+    padding: 12,
     borderRadius: 8,
-    marginTop: 15,
-    backgroundColor: "white"
+    marginBottom: 15,
   },
   btn: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: "#4CAF50",
     padding: 15,
     borderRadius: 10,
-    marginTop: 25,
-    alignItems: "center"
+    alignItems: "center",
   },
-  btnText: { color: "white", fontSize: 18, fontWeight: "bold" }
+  btnText: { color: "#fff", fontWeight: "bold", fontSize: 18 },
 });
